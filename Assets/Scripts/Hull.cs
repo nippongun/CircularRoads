@@ -6,19 +6,20 @@ public class Hull : MonoBehaviour
 {
     List<Line> lineList;
 
-    public Hull() {
+    public Hull(Line line){
         lineList = new List<Line>();
+        lineList.Add(line);
     }
 
-    float calculateAngle(Line l1, Line l2) {
+    float CalculateAngle(Line l1, Line l2) {
         return 1;
     }
 
-    void deleteLine() { 
+    void DeleteLine() { 
     
     }
 
-    void createLine() { 
-    
+    void CreateLine(Vector2 p1, Vector2 p2) {
+        lineList.Add(new Line(p1, p2));
     }
 }
