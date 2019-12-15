@@ -6,9 +6,11 @@ using UnityEngine;
 public class PointManager : MonoBehaviour
 {
     [SerializeField]
-    public List<Vector2> points;
+    public List<Point> points;
     public List<Line> lines;
-    public List<Hull> hulls;
+    public List<Point> hull;
+    public ConvexHull convexHull;
+    public Point point;
     [SerializeField]
     public int pointCount;
     public float min;
@@ -16,37 +18,30 @@ public class PointManager : MonoBehaviour
 
     private void Start()
     {
-        // _ = gameObject.AddComponent<PointManager>();
-        points = new List<Vector2>();
+        points = new List<Point>();
+        convexHull = new ConvexHull();
         GeneratePoints();
         CreateLines();
+        hull = convexHull.CreateConvexHull(points);
     }
 
     public void GeneratePoints() {
 
         for (int i = 0; i < pointCount; i++)
         {
-            Vector2 v = new Vector2 {
-            x = (float)System.Math.Floor(Random.Range(min, limit)),
-            y = (float)System.Math.Floor(Random.Range(min, limit))
-            };
-            Debug.Log(v.x);
-            Debug.Log(v.y);
-            points.Add(v);
+            Point point = new Point(
+                (float)System.Math.Floor(Random.Range(min, limit)),
+                (float)System.Math.Floor(Random.Range(min, limit))
+            );
+            Debug.Log("X:"+point.X);
+            Debug.Log("Y"+point.Y);
+            points.Add(point);
         }
     }
 
     public void CreateLines() {
-        points = points.OrderBy(p => p.x ).ToList();
-        int j = 0;
-        for (int i = 0; i < points.Count; i+=2)
-        {           
-            lines.Add(new Line(points[i], points[i + 1]));
-            _ = new Hull(lines[j]);
-            Debug.DrawLine(lines[j].p1, lines[j].p2, Color.black, 100000);
-            j++;
-        }
+        //hull = hull.OrderBy(p => p.X).ToList();
+        
     }
-
 
 }
