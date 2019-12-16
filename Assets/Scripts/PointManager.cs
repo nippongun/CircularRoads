@@ -19,10 +19,11 @@ public class PointManager : MonoBehaviour
     private void Start()
     {
         points = new List<Point>();
-        convexHull = new ConvexHull();
         GeneratePoints();
-        CreateLines();
+        convexHull = new ConvexHull();
         hull = convexHull.CreateConvexHull(points);
+        CreateLines();
+        
     }
 
     public void GeneratePoints() {
@@ -41,7 +42,12 @@ public class PointManager : MonoBehaviour
 
     public void CreateLines() {
         //hull = hull.OrderBy(p => p.X).ToList();
-        
+        for (int i = 0; i < hull.Count-1; i++)
+        {
+            Debug.Log("Hull X:"+hull[i].X);
+            Debug.DrawLine(new Vector2(hull[i].X,hull[i].Y), new Vector2(hull[i+1].X, hull[i+1].Y), new Color(0,0,0),200000);
+        }
+        Debug.DrawLine(new Vector2(hull[0].X, hull[0].Y), new Vector2(hull[hull.Count-1].X, hull[hull.Count-1].Y), new Color(0, 0, 0), 200000);
     }
 
 }

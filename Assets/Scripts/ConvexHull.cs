@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class ConvexHull : MonoBehaviour
 {
+    [SerializeField]
+    public List<Point> hull;
     public List<Point> CreateConvexHull(List<Point> points) {
         points.Sort();
-        List<Point> hull = new List<Point>();
+        hull = new List<Point>();
 
         foreach (Point point in points) {
-            while (hull.Count >= 2 && !CounterClockWise(hull[hull.Count-2], hull[hull.Count - 2], point)) {
+            while (hull.Count >= 2 && !CounterClockWise(hull[hull.Count-2], hull[hull.Count - 1], point)) {
                 hull.RemoveAt(hull.Count - 1);
             }
             hull.Add(point);
@@ -18,7 +20,7 @@ public class ConvexHull : MonoBehaviour
         for (int i = points.Count -1 ; i >= 0; i--)
         {
             Point point = points[i];
-            while (hull.Count > tmp && !CounterClockWise(hull[hull.Count - 2], hull[hull.Count - 2], point)) {
+            while (hull.Count > tmp && !CounterClockWise(hull[hull.Count - 2], hull[hull.Count - 1], point)) {
                 hull.RemoveAt(hull.Count - 1);
             }
             hull.Add(point);
