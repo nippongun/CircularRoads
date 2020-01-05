@@ -63,7 +63,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Editor\HullEditor.cs" />
     <Compile Include="Assets\Scripts\Editor\PathEditor.cs" />
+    <Compile Include="Assets\Scripts\Editor\RoadEditor.cs" />
     <Reference Include="UnityEditor.TestRunner">
       <HintPath>C:/Users/simon/Documents/Unity/ConvexHull/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
     </Reference>

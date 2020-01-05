@@ -6,48 +6,33 @@ using UnityEngine;
 public class PointManager : MonoBehaviour
 {
     [SerializeField]
-    public List<Point> points;
-    public List<Line> lines;
-    public List<Point> hull;
-    public ConvexHull convexHull;
-    public Point point;
+    public List<Vector2> points;
+    public List<Vector2> hull;
     [SerializeField]
     public int pointCount;
     public float min;
     public float limit;
 
-    private void Start()
-    {
-        points = new List<Point>();
-        GeneratePoints();
-        convexHull = new ConvexHull();
-        hull = convexHull.CreateConvexHull(points);
-        CreateLines();
-        
-    }
-
     public void GeneratePoints() {
-
-        for (int i = 0; i < pointCount; i++)
+            points = new List<Vector2>();
+            for (int i = 0; i < pointCount; i++)
+            {
+                Vector2 point = new Vector2(
+                    (float)System.Math.Floor(Random.Range(min, limit)),
+                    (float)System.Math.Floor(Random.Range(min, limit))
+                );
+                points.Add(point);
+            } 
+    }
+    public void GenerateHull()
+    {
+        if(points != null)
         {
-            Point point = new Point(
-                (float)System.Math.Floor(Random.Range(min, limit)),
-                (float)System.Math.Floor(Random.Range(min, limit))
-            );
-            Debug.Log("X:"+point.X);
-            Debug.Log("Y"+point.Y);
-            points.Add(point);
+           hull = ConvexHull.CreateConvexHull(points);
+        } else
+        {
+            GeneratePoints();
+            hull = ConvexHull.CreateConvexHull(points);
         }
     }
-
-    public void CreateLines() {
-        //hull = hull.OrderBy(p => p.X).ToList();
-        for (int i = 0; i < hull.Count-1; i++)
-        {
-            Debug.Log("Hull X:"+hull[i].X);
-            Debug.DrawLine(new Vector2(hull[i].X,hull[i].Y), new Vector2(hull[i+1].X, hull[i+1].Y), new Color(0,0,0),200000);
-        }
-        Debug.DrawLine(new Vector2(hull[0].X, hull[0].Y), new Vector2(hull[hull.Count-1].X, hull[hull.Count-1].Y), new Color(0, 0, 0), 200000);
-    }
-
 }

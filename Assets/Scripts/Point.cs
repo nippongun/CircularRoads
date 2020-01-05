@@ -3,18 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Point : IComparable<Point> 
+public class Point : IComparable<Point>
 {
-    private float x, y;
+    private Vector2 v;
 
     public Point(float x, float y) {
-        this.x = x;
-        this.y = y;
+        v.x = x;
+        v.y = y;
     }
-    public float X { get => x; set => x = value; }
-    public float Y { get => y; set => y = value; }
-
-    public int CompareTo(Point point) {
-        return x.CompareTo(point.x);
+    public float Y
+    {
+        get { return v.y; }
+    }
+    public float X
+    {
+        get { return v.x; }
+    }
+    public int CompareTo(Point point)
+    {
+        return X.CompareTo(point.X);
     }
 }

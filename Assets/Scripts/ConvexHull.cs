@@ -1,16 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class ConvexHull : MonoBehaviour
+using System.Linq;
+public static class ConvexHull 
 {
-    [SerializeField]
-    public List<Point> hull;
-    public List<Point> CreateConvexHull(List<Point> points) {
-        points.Sort();
-        hull = new List<Point>();
+    public static List<Vector2> CreateConvexHull(List<Vector2> points) {
+        points = points.OrderBy(x => x.x).ToList();
+        List<Vector2> hull = new List<Vector2>();
 
-        foreach (Point point in points) {
+        foreach (Vector2 point in points) {
             while (hull.Count >= 2 && !CounterClockWise(hull[hull.Count-2], hull[hull.Count - 1], point)) {
                 hull.RemoveAt(hull.Count - 1);
             }
@@ -19,7 +17,7 @@ public class ConvexHull : MonoBehaviour
         int tmp = hull.Count + 1;
         for (int i = points.Count -1 ; i >= 0; i--)
         {
-            Point point = points[i];
+            Vector2 point = points[i];
             while (hull.Count > tmp && !CounterClockWise(hull[hull.Count - 2], hull[hull.Count - 1], point)) {
                 hull.RemoveAt(hull.Count - 1);
             }
@@ -30,7 +28,7 @@ public class ConvexHull : MonoBehaviour
         return hull;
     }
 
-    bool CounterClockWise(Point p1, Point p2, Point p3) {
-        return (((p2.Y - p1.Y) * (p3.X - p1.X)) < (p2.X - p1.X) * (p3.Y - p1.Y ) );
+    static bool CounterClockWise(Vector2 p1, Vector2 p2, Vector2 p3) {
+        return (((p2.y - p1.y) * (p3.x - p1.x)) < (p2.x - p1.x) * (p3.x - p1.x ) );
     }
 }
