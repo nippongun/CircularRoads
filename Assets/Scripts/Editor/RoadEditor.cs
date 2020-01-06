@@ -9,6 +9,15 @@ public class RoadEditor : Editor
 
     RoadCreator creator;
 
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI();
+        if (GUILayout.Button("Generate new random road"))
+        {
+            creator.GenerateRoad();
+        }
+    }
+
     void OnSceneGUI()
     {
         if (creator.autoUpdate && Event.current.type == EventType.Repaint)

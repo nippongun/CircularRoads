@@ -9,11 +9,13 @@ public class PointManager : MonoBehaviour
     public List<Vector2> points;
     public List<Vector2> hull;
     [SerializeField]
-    public int pointCount;
-    public float min;
-    public float limit;
+    public int pointCount = 10;
+    public float min = 0;
+    public float limit = 20;
 
-    public void GeneratePoints() {
+    public bool autoUpdate;
+
+     public void GeneratePoints() {
             points = new List<Vector2>();
             for (int i = 0; i < pointCount; i++)
             {

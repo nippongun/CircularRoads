@@ -25,6 +25,11 @@ public class HullEditor : Editor
             manager.GenerateHull();
         }
 
+        if (manager.autoUpdate && Event.current.type == EventType.Repaint)
+        {
+            manager.GenerateHull();
+        }
+
         if (EditorGUI.EndChangeCheck())
         {
             SceneView.RepaintAll();

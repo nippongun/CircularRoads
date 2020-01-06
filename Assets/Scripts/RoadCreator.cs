@@ -14,11 +14,33 @@ public class RoadCreator : MonoBehaviour
     public bool autoUpdate;
     public float tiling = 1;
 
+    public Path path;
+
+
     public void UpdateRoad()
     {
-        Path path = GetComponent<PathCreator>().path;
+        path = GetComponent<PathCreator>().path;
+        
+
         Vector2[] points = path.CalculateEvenlySpacedPoints(spacing);
         GetComponent<MeshFilter>().mesh = CreateRoadMesh(points, path.IsClosed);
+
+        int textureRepeat = Mathf.RoundToInt(tiling * points.Length * spacing * .05f);
+        GetComponent<MeshRenderer>().sharedMaterial.mainTextureScale = new Vector2(1, textureRepeat);
+ 
+    }
+    public void GenerateRoad()
+    {
+        PointManager manager = GetComponent<PointManager>();
+        manager.pointCount = GetComponent<PointManager>().pointCount;
+        manager.GeneratePoints();
+        manager.GenerateHull();
+
+        path = HullToPath(manager.hull);
+        path.AutoSetControlPoints = true;
+
+        Vector2[] points = path.CalculateEvenlySpacedPoints(spacing);
+        GetComponent<MeshFilter>().mesh = CreateRoadMesh(points, true);
 
         int textureRepeat = Mathf.RoundToInt(tiling * points.Length * spacing * .05f);
         GetComponent<MeshRenderer>().sharedMaterial.mainTextureScale = new Vector2(1, textureRepeat);
@@ -78,4 +100,16 @@ public class RoadCreator : MonoBehaviour
 
         return mesh;
     }
+
+    public Path  HullToPath(List<Vector2> hull)
+    {
+        Path path = new Path(hull[0]);
+        for (int i = 1; i < hull.Count; i++)
+        {
+            path.AddSegment(hull[i]);
+        }
+        return path;
+    }
+
+
 }
