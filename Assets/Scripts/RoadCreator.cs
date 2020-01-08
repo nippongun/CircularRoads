@@ -36,6 +36,7 @@ public class RoadCreator : MonoBehaviour
 
         path = HullToPath(manager.points);      
         path.AutoSetControlPoints = true;
+        path.IsClosed = true;
 
 
         Vector2[] points = path.CalculateEvenlySpacedPoints(spacing);
@@ -105,7 +106,7 @@ public class RoadCreator : MonoBehaviour
     public Path HullToPath(List<Vector2> hull)
     {
         Path path = new Path(hull[0],hull[1]);
-        for (int i = 1; i < hull.Count; i++)
+        for (int i = 2; i < hull.Count; i++)
         {
             path.AddSegment(hull[i]);
         }

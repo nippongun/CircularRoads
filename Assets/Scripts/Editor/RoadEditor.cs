@@ -29,14 +29,14 @@ public class RoadEditor : Editor
     private void Draw() {
         for (int i = 0; i < creator.path.NumPoints; i++)
         {
-            Handles.color = (i % 3 == 0) ? Color.red:Color.white;
+            Handles.color = (i % 3 == 0) ? Color.red:Color.black;
 
             
-            if (i == creator.path.NumPoints-1) Handles.color = Color.black;
+            if (i == creator.path.NumPoints-1) Handles.color = Color.yellow;
             
 
             
-            float handleSize = (i % 3 == 0) ? 0.5f: 0.7f;
+            float handleSize = (i % 3 == 0) ? 1f: 0.7f;
             if ( i == 3)
             {
                 Handles.color = Color.blue;
