@@ -16,7 +16,6 @@ public class RoadCreator : MonoBehaviour
 
     public Path path;
 
-
     public void UpdateRoad()
     {
         path = GetComponent<PathCreator>().path;
@@ -34,10 +33,10 @@ public class RoadCreator : MonoBehaviour
         PointManager manager = GetComponent<PointManager>();
         manager.pointCount = GetComponent<PointManager>().pointCount;
         manager.GeneratePoints();
-        manager.GenerateHull();
 
-        path = HullToPath(manager.hull);
+        path = HullToPath(manager.points);      
         path.AutoSetControlPoints = true;
+
 
         Vector2[] points = path.CalculateEvenlySpacedPoints(spacing);
         GetComponent<MeshFilter>().mesh = CreateRoadMesh(points, true);
@@ -93,23 +92,23 @@ public class RoadCreator : MonoBehaviour
             triIndex += 6;
         }
 
-        Mesh mesh = new Mesh();
-        mesh.vertices = verts;
-        mesh.triangles = tris;
-        mesh.uv = uvs;
+        Mesh mesh = new Mesh
+        {
+            vertices = verts,
+            triangles = tris,
+            uv = uvs
+        };
 
         return mesh;
     }
 
-    public Path  HullToPath(List<Vector2> hull)
+    public Path HullToPath(List<Vector2> hull)
     {
-        Path path = new Path(hull[0]);
+        Path path = new Path(hull[0],hull[1]);
         for (int i = 1; i < hull.Count; i++)
         {
             path.AddSegment(hull[i]);
         }
         return path;
     }
-
-
 }

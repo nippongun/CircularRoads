@@ -19,17 +19,6 @@ public class HullEditor : Editor
             manager.GeneratePoints();
         }
 
-        if (GUILayout.Button("Generate new hull"))
-        {
-            Undo.RecordObject(manager, "Generate new hull");
-            manager.GenerateHull();
-        }
-
-        if (manager.autoUpdate && Event.current.type == EventType.Repaint)
-        {
-            manager.GenerateHull();
-        }
-
         if (EditorGUI.EndChangeCheck())
         {
             SceneView.RepaintAll();
@@ -44,15 +33,12 @@ public class HullEditor : Editor
     void Draw()
     {
         Handles.color = Color.white;
-        for (int i = 0; i < manager.hull.Count - 1; i++)
+        for (int i = 0; i < manager.pointCount-1; i++)
         {
-            Handles.DrawLine(manager.hull[i], manager.hull[i + 1]);
-        }
-        Handles.DrawLine(manager.hull[0], manager.hull[manager.hull.Count-1]);
-        for (int i = 0; i < manager.pointCount; i++)
-        {
+            Handles.DrawLine(manager.points[i], manager.points[i + 1]);
             Handles.FreeMoveHandle(manager.points[i], Quaternion.identity, 0.5f,Vector2.zero,Handles.CylinderHandleCap);
         }
+        Handles.DrawLine(manager.points[0], manager.points[manager.points.Count - 1]);
     }
 
     private void OnEnable()
@@ -61,7 +47,7 @@ public class HullEditor : Editor
 
         if (manager.points == null)
         {
-            manager.GenerateHull();
+            manager.GeneratePoints();
         }
     }
 }

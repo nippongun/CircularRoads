@@ -13,6 +13,17 @@ public class Path
     [SerializeField, HideInInspector]
     bool autoSetControlPoints;
 
+    public Path(Vector2 anchorPosition, Vector2 anchor2)
+    {
+        points = new List<Vector2>
+        {
+            anchorPosition,
+            anchorPosition+(Vector2.right+Vector2.up) / 2,
+            anchorPosition + Vector2.right+((Vector2.right+Vector2.up) / 2),
+            anchor2
+        };
+    }
+
     public Path(Vector2 centre)
     {
         points = new List<Vector2>
