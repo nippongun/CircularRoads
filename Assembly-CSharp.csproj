@@ -71,6 +71,7 @@
     <Compile Include="Assets\Scripts\PointManager.cs" />
     <Compile Include="Assets\Scripts\RoadCreator.cs" />
     <Compile Include="Assets\Scripts\StartTrack.cs" />
+    <Compile Include="Assets\Scripts\Wheel.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/simon/Documents/Unity/ConvexHull/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

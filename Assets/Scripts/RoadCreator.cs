@@ -15,6 +15,7 @@ public class RoadCreator : MonoBehaviour
     public float tiling = 1;
 
     public Path path;
+    MeshCollider meshCollider;
 
     public void UpdateRoad()
     {
@@ -26,7 +27,6 @@ public class RoadCreator : MonoBehaviour
 
         int textureRepeat = Mathf.RoundToInt(tiling * points.Length * spacing * .05f);
         GetComponent<MeshRenderer>().sharedMaterial.mainTextureScale = new Vector2(1, textureRepeat);
- 
     }
     public void GenerateRoad()
     {
@@ -38,12 +38,13 @@ public class RoadCreator : MonoBehaviour
         path.AutoSetControlPoints = true;
         path.IsClosed = true;
 
-
         Vector2[] points = path.CalculateEvenlySpacedPoints(spacing);
         GetComponent<MeshFilter>().mesh = CreateRoadMesh(points, true);
 
         int textureRepeat = Mathf.RoundToInt(tiling * points.Length * spacing * .05f);
         GetComponent<MeshRenderer>().sharedMaterial.mainTextureScale = new Vector2(1, textureRepeat);
+
+        meshCollider.GetComponent<Mesh>();
     }
 
     Mesh CreateRoadMesh(Vector2[] points, bool isClosed)

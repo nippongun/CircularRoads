@@ -4,44 +4,105 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public enum DriveMode { All, Front, Rear };
+    public Transform gravityCenter;
+    public Rigidbody rigidbody;
+    public WheelCollider wheelFrontRight;
+    public WheelCollider wheelFrontLeft;
+    public WheelCollider wheelRearRight;
+    public WheelCollider wheelRearLeft;
 
-    public float speed = 10;
-    public float smoothMoveTime = .1f;
-    public float turnSpeed = 4f;
+    public DriveMode dm = DriveMode.Rear;
 
-    float angle;
-    float smoothInputMagnitude;
-    float smoothMoveVelocity;
-    Vector3 velocity;
-    Rigidbody rigidbody;
+    public float maxRPM;
+    public float optimalRPM;
+    public float torque;
+    public float brakeTorque;
+    public float turnRadius;
+
+    public float rollThreshold;
+
+    public float RPM
+    {
+        get
+        {
+            return wheelRearLeft.rpm;
+        }
+    }
 
     private void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
+        rigidbody.centerOfMass = gravityCenter.localPosition;
     }
-
-    private void Update()
-    {
-        Movement();
-        Debug.DrawRay(transform.position, Vector3.forward, Color.green);
-    }
-
-    private void Movement()
-    {
-        Vector3 inputDirection = new Vector3(-Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0f).normalized;
-        float inputMagnitude = inputDirection.magnitude;
-        smoothInputMagnitude = Mathf.SmoothDamp(smoothInputMagnitude, inputMagnitude, ref smoothMoveVelocity, smoothMoveTime);
-
-        float targetAngle = Mathf.Atan2(inputDirection.x, inputDirection.y) * Mathf.Rad2Deg;
-        angle = Mathf.LerpAngle(angle, targetAngle, Time.deltaTime * turnSpeed * inputMagnitude);
-
-        velocity = transform.up * speed * smoothInputMagnitude;
-    }
-        
 
     private void FixedUpdate()
     {
-        rigidbody.MoveRotation(Quaternion.Euler(Vector3.forward * angle));
-        rigidbody.MovePosition(rigidbody.position + velocity * Time.deltaTime);
+        float inputTorque = Input.GetAxis("Vertical") * torque;
+
+        if (RPM < optimalRPM)
+        {
+            inputTorque = Mathf.Lerp(inputTorque / 10f, inputTorque, RPM / optimalRPM);
+        }
+        else
+        {
+            inputTorque = Mathf.Lerp(inputTorque, 0, (RPM - optimalRPM) / (maxRPM - optimalRPM));
+        }
+
+        RollBar(wheelFrontLeft, wheelFrontRight);
+        RollBar(wheelRearLeft, wheelRearRight);
+
+        wheelFrontRight.steerAngle = Input.GetAxis("Horizontal") * turnRadius;
+        wheelFrontLeft.steerAngle = Input.GetAxis("Horizontal") * turnRadius;
+
+        wheelFrontRight.motorTorque = dm == DriveMode.Rear ? 0 : inputTorque;
+        wheelFrontLeft.motorTorque = dm == DriveMode.Rear ? 0 : inputTorque;
+        wheelRearRight.motorTorque = dm == DriveMode.Front ? 0 : inputTorque;
+        wheelRearLeft.motorTorque = dm == DriveMode.Front ? 0 : inputTorque;
+
+        if (Input.GetButton("Fire1"))
+        {
+            wheelFrontRight.brakeTorque = brakeTorque;
+            wheelFrontLeft.brakeTorque = brakeTorque;
+            wheelRearRight.brakeTorque = brakeTorque;
+            wheelRearLeft.brakeTorque = brakeTorque;
+        }
+        else
+        {
+            wheelFrontRight.brakeTorque = 0;
+            wheelFrontLeft.brakeTorque = 0;
+            wheelRearRight.brakeTorque = 0;
+            wheelRearLeft.brakeTorque = 0;
+        }
+    }
+
+    void RollBar(WheelCollider wheelLeft, WheelCollider wheelRight)
+    {
+        WheelHit hit;
+        float travelRight = 1.0f;
+        float travelLeft = 1.0f;
+
+        bool groundedRight = wheelRight.GetGroundHit(out hit);
+        if (groundedRight)
+        {
+            travelRight = (-wheelRight.transform.InverseTransformPoint(hit.point).y - wheelRight.radius) / wheelRight.suspensionDistance;
+        }
+        bool groundedLeft = wheelLeft.GetGroundHit(out hit);
+        if (groundedLeft)
+        {
+            travelLeft = (-wheelLeft.transform.InverseTransformPoint(hit.point).y - wheelLeft.radius) / wheelLeft.suspensionDistance;
+
+        }
+
+        float antiRollForce = (travelLeft - travelRight) * rollThreshold;
+
+        if (groundedRight)
+        {
+            rigidbody.AddForceAtPosition(wheelRight.transform.up * antiRollForce, wheelRight.transform.position);
+        }
+        if (groundedLeft)
+        {
+            rigidbody.AddForceAtPosition(wheelLeft.transform.up * -antiRollForce, wheelLeft.transform.position);
+        }
     }
 }
