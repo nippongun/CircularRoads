@@ -44,7 +44,7 @@ public class RoadCreator : MonoBehaviour
         int textureRepeat = Mathf.RoundToInt(tiling * points.Length * spacing * .05f);
         GetComponent<MeshRenderer>().sharedMaterial.mainTextureScale = new Vector2(1, textureRepeat);
 
-        meshCollider.GetComponent<Mesh>();
+        //meshCollider.GetComponent<Mesh>();
     }
 
     Mesh CreateRoadMesh(Vector2[] points, bool isClosed)

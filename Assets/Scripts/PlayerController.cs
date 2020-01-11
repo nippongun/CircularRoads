@@ -14,11 +14,11 @@ public class PlayerController : MonoBehaviour
 
     public DriveMode dm = DriveMode.Rear;
 
-    public float maxRPM;
-    public float optimalRPM;
-    public float torque;
-    public float brakeTorque;
-    public float turnRadius;
+    public float maxRPM = 2000f;
+    public float optimalRPM = 1500f;
+    public float torque = 250f;
+    public float brakeTorque = 100f;
+    public float turnRadius = 25f;
 
     public float rollThreshold;
 

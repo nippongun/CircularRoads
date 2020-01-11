@@ -28,9 +28,11 @@ public class Wheel : MonoBehaviour
         }
 
 
-        wheel.localPosition = position;
+        //wheel.localPosition = position;
 
-        wheel.localRotation = Quaternion.Euler(0, collider.steerAngle, 90);
+        Quaternion quaternion = Quaternion.Euler(0, collider.steerAngle, 90);
+        wheel.localRotation = quaternion;
+        collider.GetWorldPose(out position, out quaternion);
     }
     
 }

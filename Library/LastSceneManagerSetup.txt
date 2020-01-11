@@ -1,5 +1,5 @@
 sceneSetups:
-- path: C:/Users/simon/AppData/Local/Temp/Temp1_Race Test.zip/Race Test/Assets/_SCENE_.unity
+- path: Assets/Scenes/TestArea.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0

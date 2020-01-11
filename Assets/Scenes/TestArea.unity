@@ -261,7 +261,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 49de9163ff7c328489841277e7e25b41, type: 2}
+  - {fileID: 2100000, guid: 99e13a74ed01eab42b5dece547b50efb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -379,12 +379,32 @@ PrefabInstance:
     - target: {fileID: 5710774547351222363, guid: f53d6ea7b5ffa284096eaa6e18ba6a6f,
         type: 3}
       propertyPath: optimalRPM
-      value: 400
+      value: 1200
       objectReference: {fileID: 0}
     - target: {fileID: 5710774547351222363, guid: f53d6ea7b5ffa284096eaa6e18ba6a6f,
         type: 3}
       propertyPath: torque
       value: 2500
+      objectReference: {fileID: 0}
+    - target: {fileID: 5710774547351222363, guid: f53d6ea7b5ffa284096eaa6e18ba6a6f,
+        type: 3}
+      propertyPath: dm
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5710774547351222363, guid: f53d6ea7b5ffa284096eaa6e18ba6a6f,
+        type: 3}
+      propertyPath: maxRPM
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5710774547351222363, guid: f53d6ea7b5ffa284096eaa6e18ba6a6f,
+        type: 3}
+      propertyPath: rollThreshold
+      value: 20000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5710774547351222363, guid: f53d6ea7b5ffa284096eaa6e18ba6a6f,
+        type: 3}
+      propertyPath: turnRadius
+      value: 25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f53d6ea7b5ffa284096eaa6e18ba6a6f, type: 3}
