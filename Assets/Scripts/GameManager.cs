@@ -15,8 +15,8 @@ public class GameManager : MonoBehaviour
         road.GenerateRoad();
 
         player = player.GetComponent<PlayerController>();
-        player.transform.position = new Vector2(road.path[0].x, road.path[0].y + 0.5f);
-        player.transform.rotation = Quaternion.Euler(road.path[2] - road.path[0]);         
+        player.transform.position = new Vector2(road.path[0].x, road.path[0].y + 3f);
+        player.transform.rotation = Quaternion.Euler(road.path[3] - road.path[0]);         
     }
     private void StartGame()
     {

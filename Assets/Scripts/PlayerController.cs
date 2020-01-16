@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class PlayerController : MonoBehaviour
 
     public float rollThreshold;
 
+    public Text speedText;
     public float RPM
     {
         get
@@ -36,8 +38,18 @@ public class PlayerController : MonoBehaviour
         rigidbody.centerOfMass = gravityCenter.localPosition;
     }
 
+    public float Speed()
+    {
+        return rigidbody.velocity.magnitude * 3.6f * 3;
+    }
+
     private void FixedUpdate()
     {
+        if (speedText != null)
+        {
+            speedText.text = "Speed: " + Speed().ToString("f0") + " km/h";
+        }
+
         float inputTorque = Input.GetAxis("Vertical") * torque;
 
         if (RPM < optimalRPM)
@@ -104,5 +116,18 @@ public class PlayerController : MonoBehaviour
         {
             rigidbody.AddForceAtPosition(wheelLeft.transform.up * -antiRollForce, wheelLeft.transform.position);
         }
+    }
+
+    Vector3 CalculateCenterOfMass() { 
+ 
+        Vector3 centerOfMass = Vector3.zero;
+        float mass = 0f;
+        Rigidbody[] parts = GetComponentsInChildren<Rigidbody>();
+        foreach (Rigidbody part in parts )
+	    {
+            centerOfMass += part.worldCenterOfMass * part.mass;
+            mass += part.mass;
+	    }
+        return centerOfMass /= mass;
     }
 }
