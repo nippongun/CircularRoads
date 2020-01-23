@@ -17,3 +17,5 @@ Correct the control points.
 With cubic interpolation, points on the path are created. A given width sets vertices perpendicular to the path point.
 1.6 
 Create mesh based on the created vertices. Add texture.
+1.7 
+Apply collider to the road based on its mesh. (mesh collider)
