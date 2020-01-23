@@ -1,6 +1,9 @@
 # ConvexHull (Aka. Procedually generated road) in Unity
 Inintially, the idea was to create a point set which is sorted with a convex hull. (Thus the name). Problems alongside this, especially performance and control over the point. Based on this point set a mesh is created is along the points.
 
+Trello documentation
+https://trello.com/b/Nl8nXBK3/little-racer
+
 # Introduction
 This program is based on cubic interpolation. To create a Bezier, four points are mandatory.
 Every third point is a anchor point, where the Bezier travels through. Every else are the control points to define the shape of the Bezier. 
@@ -19,3 +22,6 @@ With cubic interpolation, points on the path are created. A given width sets ver
 Create mesh based on the created vertices. Add texture.
 1.7 
 Apply collider to the road based on its mesh. (mesh collider)
+
+Misc.
+Car controller based on Unity's wheel collider system
