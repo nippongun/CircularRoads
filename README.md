@@ -1,4 +1,4 @@
-# ConvexHull (Aka. Procedually generated road) in Unity
+# CircularRoads (Aka. Procedually generated road) in Unity
 Inintially, the idea was to create a point set which is sorted with a convex hull. (Thus the name). Problems alongside this, especially performance and control over the point. Based on this point set a mesh is created is along the points.
 
 Trello documentation
