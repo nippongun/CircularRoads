@@ -25,3 +25,8 @@ Apply collider to the road based on its mesh. (mesh collider)
 
 Misc.
 Car controller based on Unity's wheel collider system
+
+## What was learned?
+The result was learning the Unity engine in an advandced stage. 
+Various techniques as Gizmos, meshes and interpolation were used.
+Additionally, the project uses Unity Editor scripts.
